@@ -1,0 +1,34 @@
+<div>
+<div class="container-fluid p-0">
+<div class="container-fluid">
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid p-0">
+      <a class="navbar-brand" href=""
+         [class.expanded]="expandedAbbreviation !== 'BCC'"
+         (mouseover)="expandAbbreviation()"
+         (mouseout)="resetAbbreviation()"
+      >
+        &nbsp;{{ expandedAbbreviation }}
+      </a>
+    </div>
+  </nav> 
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/home']" style="text-decoration: none; color: black;">Home</a> 
+        </li>
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/bill']" style="text-decoration: none; color: black;">Bill</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          <a [routerLink]="['/payment']" style="text-decoration: none; color: black;">Payment</a> 
+        </li>
+      </ol>
+    </nav>
+  </div>
+</nav>
+</div></div>

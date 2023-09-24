@@ -1,0 +1,146 @@
+<app-header></app-header>
+<br>
+<div *ngIf="!showFilterSection && !showPaidBills && !showUnPaidBills">
+  <div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Bill List</h2>
+      <button class="btn btn-primary" (click)="showFilterSection = true">Filter</button>
+    </div>
+    
+  <div>
+    <table class="table align-middle mb-0 bg-white">
+      <thead class="bg-light">
+        <tr>
+          <th>Bill ID</th>
+          <th>Unit Consumed</th>
+          <th>Bill Duration Date</th>
+          <th>Amount</th>
+          <th>Due Date</th>
+          <th>Paid</th>
+          <th>Pay</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let bill of bills">
+          <td>{{ bill.billId }}</td>
+          <td>{{ bill.unitConsumed }}</td>
+          <td>{{ bill.billDuration }}</td>
+          <td>{{ bill.billAmount }}</td>
+          <td>{{ bill.dueDate }}</td>
+          <td #paid>
+            <span
+              class="badge rounded-pill d-inline"
+              [class.bg-success]="bill.paid"
+              [class.bg-danger]="!bill.paid"
+            >
+              {{ bill.paid ? 'Paid' : 'Not Paid' }}
+            </span>
+          </td>
+          <td>
+            <ng-container *ngIf="!bill.paid; else unpaidLink">
+              <button (click)="navigateToPaymentMethods(bill.billId, bill.billAmount,bill.paid)" class="btn btn-danger">Pay</button>
+            </ng-container>
+            <ng-template #unpaidLink>
+              <button [disabled]="bill.isPaid" class="btn btn-success">Success</button>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<section *ngIf="showFilterSection && !showPaidBills && !showUnPaidBills">
+  <div class="row">
+    <div class="col-md-6 mb-3 d-flex justify-content-around">
+      <button (click)="showPaidBillsTable()" type="button" class="btn btn-outline-primary btn-lg">Paid</button>
+      <button (click)="showUnPaidBillsTable()" type="button" class="btn btn-outline-primary btn-lg">UnPaid</button>
+      <button type="button" class="btn btn-outline-primary" (click)="showFilterSection = false">Back</button>
+    </div>
+  </div>
+</section>
+
+<div *ngIf="showPaidBills">
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Bill ID</th>
+        <th>Unit Consumed</th>
+        <th>Bill Duration Date</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Paid</th>
+        <th>Pay</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bill of paidBills">
+        <td>{{ bill.billId }}</td>
+        <td>{{ bill.unitConsumed }}</td>
+        <td>{{ bill.billDuration }}</td>
+        <td>{{ bill.billAmount }}</td>
+        <td>{{ bill.dueDate }}</td>
+        <td #paid>
+          <span
+            class="badge rounded-pill d-inline"
+            [class.bg-success]="bill.paid"
+            [class.bg-danger]="!bill.paid"
+          >
+            {{ bill.paid ? 'Paid' : 'Not Paid' }}
+          </span>
+        </td>
+        <td>
+          <ng-container *ngIf="!bill.paid; else unpaidLink">
+            <button (click)="navigateToPaymentMethods(bill.billId, bill.billAmount,bill.paid)" class="btn btn-danger">Pay</button>
+          </ng-container>
+          <ng-template #unpaidLink>
+            <button [disabled]="bill.isPaid" class="btn btn-success">Success</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showUnPaidBills">
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Bill ID</th>
+        <th>Unit Consumed</th>
+        <th>Bill Duration Date</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Paid</th>
+        <th>Pay</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bill of notPaidBills">
+        <td>{{ bill.billId }}</td>
+        <td>{{ bill.unitConsumed }}</td>
+        <td>{{ bill.billDuration }}</td>
+        <td>{{ bill.billAmount }}</td>
+        <td>{{ bill.dueDate }}</td>
+        <td #paid>
+          <span
+            class="badge rounded-pill d-inline"
+            [class.bg-success]="bill.paid"
+            [class.bg-danger]="!bill.paid"
+          >
+            {{ bill.paid ? 'Paid' : 'Not Paid' }}
+          </span>
+        </td>
+        <td>
+          <ng-container *ngIf="!bill.paid; else unpaidLink">
+            <button (click)="navigateToPaymentMethods(bill.billId, bill.billAmount,bill.paid)" class="btn btn-danger">Pay</button>
+          </ng-container>
+          <ng-template #unpaidLink>
+            <button [disabled]="bill.isPaid" class="btn btn-success">Success</button>
+          </ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

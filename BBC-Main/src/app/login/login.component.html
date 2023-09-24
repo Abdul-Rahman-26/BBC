@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href=""
+         [class.expanded]="expandedAbbreviation !== 'BCC'"
+         (mouseover)="expandAbbreviation()"
+         (mouseout)="resetAbbreviation()"
+      >
+        &nbsp;{{ expandedAbbreviation }}
+      </a>
+    </div>
+  </nav>
+  
+</div>
+
+<section class="vh-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5 mx-auto">
+        <div class="card bg-dark text-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <div class="mb-md-5 mt-md-4 pb-5">
+              <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+              <p class="text-white-50 mb-5" *ngIf="!loginSuccessful && !showOTPForm">Please enter your Customer ID</p>
+
+              <div class="login-box" *ngIf="!loginSuccessful && !showOTPForm">
+                <form>
+                  <div class="user-box">
+                    <input #customerId required type="number">
+                    <label>Customer ID</label>
+                  </div>
+                  <div class="button">
+                    <button (click)="onLogin(customerId.value)">
+                      Login
+                    </button><br>
+                    <p>{{loginMessage}}</p>
+                  </div>
+                </form>
+              </div>
+
+              <div class="login-box" *ngIf="loginSuccessful && showOTPForm">
+                <p class="text-white-50 mb-5">Please check your email</p>
+                <form>
+                  <div class="user-box">
+                    <input #otp required type="text">
+                    <label>Enter the OTP</label>
+                  </div>
+                  <div class="button">
+                    <button (click)="onOtp(otp.value)">
+                      Confirm
+                    </button>
+                    <button (click)="goBack()">
+                      Back
+                    </button>  <br>            
+                    <p>{{OtpMessage}}</p>      
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

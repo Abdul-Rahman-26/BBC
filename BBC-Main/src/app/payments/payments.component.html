@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Transactions</h2>
+         </div>
+    
+    <div>
+      <table class="table align-middle mb-0 bg-white">
+        <thead class="bg-light">
+          <tr>
+            <th>Payment ID</th>
+            <th>Amount</th>
+            <th>Discount Amount</th>
+            <th>Final Amount</th>
+            <th>Paid Date</th>
+            <th>Currency Mode Currency</th>
+            <th>Currency Mode Online</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let bill of payments">
+                <td>{{bill.paymentId}}</td>
+                <td>{{bill.amount}}</td>
+                <td>{{bill.discountAmount}}</td>
+                <td>{{bill.finalAmount}}</td>
+                <td>{{bill.paymentDate}}</td>
+                <td>
+                    <ng-container *ngIf="bill.paidCurrency; else notPaid">
+                      Currency
+                    </ng-container>
+                    <ng-template #notPaid>
+                    Not selected
+                    </ng-template>
+                    <td>
+                        <ng-container *ngIf="bill.paidinOnline; else notPaid">
+                          Online Mode
+                        </ng-container>
+                        <ng-template #notPaid>
+                        Not selected
+                        </ng-template>
+                      </td>
+
+            </tr>
+        </tbody></table></div>

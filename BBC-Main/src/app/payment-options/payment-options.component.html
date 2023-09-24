@@ -1,0 +1,192 @@
+<app-header></app-header>
+<div>
+<div class="container mt-3">
+  <h2 class="mb-3">Select to pay</h2>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <button type="button" class="btn btn-outline-primary btn-lg btn-block" (click)="selectPaymentMethod('creditCard')">Credit Card</button>
+    </div>
+    <div class="col-md-6 mb-3">
+      <button type="button" class="btn btn-outline-secondary btn-lg btn-block" (click)="selectPaymentMethod('debitCard')">Debit Card</button>
+    </div>
+    <div class="col-md-6 mb-3">
+      <button type="button" class="btn btn-outline-success btn-lg btn-block" (click)="selectPaymentMethod('wallet')">Wallet</button>
+    </div>
+    <div class="col-md-6 mb-3">
+      <button type="button" class="btn btn-outline-warning btn-lg btn-block" (click)="selectPaymentMethod('upi')">UPI</button>
+    </div>
+  </div>
+  
+  <section *ngIf="!creditCardDetailsEntered && selectedPaymentMethod === 'creditCard'" class="p-4 p-md-5" style="background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-5">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+            <div class="text-center mb-4">
+              <h3>Credit Card Payment</h3>
+            </div>
+            <form>
+              <p class="fw-bold mb-4 pb-2">Enter Card Details</p>
+              <div class="d-flex flex-row align-items-center mb-4 pb-1">
+                <img class="img-fluid" src="https://img.icons8.com/color/48/000000/visa.png" />
+                <div class="flex-fill mx-3">
+                  <div class="form-outline">
+                    <label class="form-label" for="cardNo">Card Number</label>
+                    <input #cardNo type="text" id="cardNo" class="form-control form-control-lg" placeholder="XXXXXXXXXXXX" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-7">
+                <div class="form-outline">
+                  <label class="form-label" for="expire">Expiration Date</label>
+                  <input #expire type="date" id="expire" class="form-control form-control-lg" placeholder="YYYY-MM-DD" />
+                </div>
+              </div>
+              <div class="col-7">
+                <div class="form-outline">
+                  <label class="form-label" for="cvv">CVV</label>
+                  <input #cvv type="text" id="cvv" class="form-control form-control-lg" placeholder="CVV" />
+                </div>
+              </div>
+              <br>
+              <div>
+                <button (click)="checkCreditCard(cardNo.value, expire.value, cvv.value)" class="btn btn-success btn-lg btn-block">Proceed</button><br>
+                <small *ngIf="creditCardMessage !== null" [ngClass]="{'text-success': creditCardMessage.startsWith('Success'), 'text-danger': creditCardMessage.startsWith('Failed')}" class="mt-2 font-italic">{{ creditCardMessage }}</small>
+              </div>  
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="!debitCardDetailsEntered && selectedPaymentMethod === 'debitCard'" class="p-4 p-md-5" style="background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/background3.webp);">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-5">
+        <div class="card rounded-3">
+          <div class="card-body p-4">
+            <div class="text-center mb-4">
+              <h3>Debit Card Payment</h3>
+            </div>
+            <form>
+              <p class="fw-bold mb-4 pb-2">Enter Card Details</p>
+              <div class="d-flex flex-row align-items-center mb-4 pb-1">
+                <img class="img-fluid" src="https://img.icons8.com/color/48/000000/visa.png" />
+                <div class="flex-fill mx-3">
+                  <div class="form-outline">
+                    <label class="form-label" for="debitCardNo">Card Number</label>
+                    <input #debitCardNo type="text" id="debitCardNo" class="form-control form-control-lg" placeholder="XXXXXXXXXXXX" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-7">
+                <div class="form-outline">
+                  <label class="form-label" for="debitCvv">CVV</label>
+                  <input #debitCvv type="number" id="debitCvv" class="form-control form-control-lg" placeholder="CVV" />
+                </div>
+              </div>
+              <br>
+              <div>
+                <button (click)="checkDebitCard(debitCardNo.value, debitCvv.value)" class="btn btn-success btn-lg btn-block">Proceed</button><br>
+                <small *ngIf="debitCardMessage !== null" [ngClass]="{'text-success': debitCardMessage.startsWith('Success'), 'text-danger': debitCardMessage.startsWith('Failed')}" class="mt-2 font-italic">{{ debitCardMessage }}</small>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section *ngIf="!walletDetailsEntered && selectedPaymentMethod === 'wallet'">
+    <div class="container mt-5">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <form>
+                  <div class="mb-3">
+                    <label for="walletName" class="form-label">Wallet Name</label>
+                    <input #walletName type="text" class="form-control" id="walletName" placeholder="Enter Wallet Name">
+                  </div>
+                  <div>
+                    <button (click)="checkWallet(walletName.value)" type="submit" class="btn btn-success">Proceed</button><br>
+                    <small *ngIf="walletMessage !== null" [ngClass]="{'text-success': walletMessage.startsWith('Success'), 'text-danger': walletMessage.startsWith('Failed')}" class="mt-2 font-italic">{{ walletMessage }}</small>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+    
+        <section *ngIf="!upiDetailsEntered && selectedPaymentMethod === 'upi'">
+          <div class="container mt-5">
+            <div class="row justify-content-center">
+              <div class="col-md-6">
+                <form>
+                  <div class="mb-3">
+                    <label for="upiId" class="form-label">UPI ID</label>
+                    <input #upiId type="text" class="form-control" id="upiId" placeholder="Enter UPI ID">
+                  </div>
+                  <div>
+                    <button (click)="checkUpi(upiId.value)" type="submit" class="btn btn-success">Proceed</button><br>
+                    <small *ngIf="upiMessage !== null" [ngClass]="{'text-success': upiMessage.startsWith('Success'), 'text-danger': upiMessage.startsWith('Failed')}" class="mt-2 font-italic">{{ upiMessage }}</small>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    </section>
+</div>
+
+
+<section *ngIf="creditCardDetailsEntered && selectedPaymentMethod === 'creditCard'" >
+  <div class="card">
+    <div class="card-header">
+      Credit Card Payment 
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Bill No: {{ billId }}</h5> <br>
+        <h2>5% off</h2>
+      
+      <button  (click)="payBillByCreditCard()" class="btn btn-outline-warning">Pay Now</button>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="debitCardDetailsEntered && selectedPaymentMethod === 'debitCard'">
+  <div class="card">
+    <div class="card-header">
+      Debit Card Payment 
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Bill No: {{ billId }} </h5><br>
+      <h2>5% off</h2>
+      <button  (click)="payBillByDebitCard()" class="btn btn-outline-warning">Pay Now</button>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="upiDetailsEntered && selectedPaymentMethod === 'upi'">
+  <div class="card">
+    <div class="card-header">
+      UPI payment
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Bill No: {{ billId }} </h5><br>
+      <h2>5% off</h2>
+      <button (click)="payBillByUpi()" class="btn btn-outline-warning">Pay Now</button>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="walletDetailsEntered && selectedPaymentMethod === 'wallet'">
+  <div class="card">
+    <div class="card-header">
+      Wallet Payment 
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Bill No: {{ billId }} </h5><br>
+      <h2>5% off</h2>
+      <button (click)="payBillByWallet()" class="btn btn-outline-warning">Pay Now</button>
+      <br>{{errorMessage}}<br>
+    </div>
+  </div>
+</section>
